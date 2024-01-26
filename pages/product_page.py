@@ -27,3 +27,17 @@ class ProductPage(BasePage):
             alert.accept()
         except NoAlertPresentException:
             print("No second alert presented")
+
+    def check_for_product_added(self):
+        self.get_product_name_compare()
+        self.get_product_price_compare()
+
+    def get_product_name_compare(self):
+        product_name_in_page = self.browser.find_element(*ProductPageLocators.PRODUCT_NAME).text
+        product_name_in_message = self.browser.find_element(*ProductPageLocators.PRODUCT_NAME_IN_MESSAGE).text
+        # product_name_in_page = ' '.join(product_name_in_page.split()[0:2])
+        assert product_name_in_page == product_name_in_message, \
+            f"Products names are not similar: in page: {product_name_in_page}, in message {product_name_in_message}"
+
+    def get_product_price_compare(self):
+        pass
