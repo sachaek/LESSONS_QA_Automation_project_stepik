@@ -1,6 +1,10 @@
+from typing import Union
+
+from selenium import webdriver
+
 
 class BasePage():
-    def __init__(self, browser, url):
+    def __init__(self, browser: Union[webdriver.Chrome, webdriver.Firefox], url):
         self.browser = browser
         self.url = url
         """Теперь в наш класс нужно добавить методы. Первым 
