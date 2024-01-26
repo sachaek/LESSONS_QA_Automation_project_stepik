@@ -1,20 +1,22 @@
 from typing import Union
 
 from selenium import webdriver
+from selenium.common import NoSuchElementException
 
 
 class BasePage():
-    def __init__(self, browser: Union[webdriver.Chrome, webdriver.Firefox], url):
+    def __init__(self, browser: Union[webdriver.Chrome, webdriver.Firefox], url, timeout=10):
         self.browser = browser
         self.url = url
-        """Теперь в наш класс нужно добавить методы. Первым 
-        делом добавим конструктор — метод, который вызывается, 
-        когда мы создаем объект. Конструктор объявляется ключевым 
-        словом __init__. В него в качестве параметров мы передаем 
-        экземпляр драйвера и url адрес. Внутри конструктора сохраняем 
-        эти данные как аттрибуты нашего класса"""
+        self.browser.implicitly_wait(timeout)
 
     def open(self):
         self.browser.get(self.url)
-        """Теперь добавим еще один метод open. Он должен 
-        открывать нужную страницу в браузере, используя метод get()."""
+
+    def is_element_present(self, how, what) -> bool:
+        try:
+            self.browser.find_element(how, what)
+        except NoSuchElementException:
+            return False
+        return True
+
